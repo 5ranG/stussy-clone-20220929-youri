@@ -8,14 +8,15 @@ spring:
 
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://web-study.ca0okwo8st6n.ap-northeast-2.rds.amazonaws.com:3306/stussy-20220929-youri
+    url: jdbc:mariadb://web-study.ca0okwo8st6n.ap-northeast-2.rds.amazonaws.com:3306/stussy-20220929-youri?allowMultiQueries=true
+    #?allowMultiQueries=true 는 Insert into가 두번 가능
     username: admin
     password: 1q2w3e4r
 
   security:
     user:
       name: youri
-      password: 1234
+      password: 1q2w3e4r!
 
 mybatis:
   mapper-locations:
