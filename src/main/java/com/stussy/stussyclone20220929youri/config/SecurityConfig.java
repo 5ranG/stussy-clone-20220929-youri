@@ -1,5 +1,7 @@
 package com.stussy.stussyclone20220929youri.config;
 
+import com.stussy.stussyclone20220929youri.service.PrincipalDetailsService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -9,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 // 시큐리티에 등록하는거. extends랑 별개
 @Configuration //스프링의 설정 클래스. 이래야 IoC에 등록
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         // 이게 기존세팅: super.configure(http);
@@ -25,7 +28,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .permitAll() // 모두 접근 권한 허용해라
                 .and() // 그리고!!!
                 .formLogin() // [메인객체] 폼 로그인 방식으로 인증해라
-                    .loginPage("/account/login") // 우리가 만든 로그인 페이지를 사용해라
+                    .usernameParameter("email") //username일 경우 생략가능 (기본값이 username)
+                    //PrincipalDetailService 에서 loadUserByUsername의 (파라미터)와 값이 동일해야함!
+                    .loginPage("/account/login") // 우리가 만든 로그인 페이지를 사용해라 (GET 요청)
+                    .loginProcessingUrl("/account/login")
+                    // 로그인 로직(PrincipalDetailsService)의 loadUserByUsername 메소드 호출 (post 요청)
+                    // security 라이브러리에서 컨트롤러가 이미 만들어져있다. 거기에 포스트매핑한다.
+                    // html form 에서 /account/login 로 요청을 날림!
+//                    .failureHandler()
                     .defaultSuccessUrl("/index"); // "이전 페이지가 없는 경우"에만 로그인 성공시 index로 보낸다.
                     //보통 자동으로 이전 페이지를 기억했다가 로그인 페이지 전 페이지로 돌아간다.
     }
