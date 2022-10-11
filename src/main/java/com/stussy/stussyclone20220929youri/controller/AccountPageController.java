@@ -14,7 +14,8 @@ public class AccountPageController {
     @GetMapping("/login")
     public String login(Model model, @RequestParam @Nullable String error){
         if(error != null){
-            model.addAttribute("error", error.equals("auth") ? "이메일 또는 비밀번호가 잘못되었습니다," : "");
+            model.addAttribute("error", error.equals("auth")
+                    ? "이메일 또는 비밀번호가 잘못되었습니다," : "");
         }
         return "account/login";
     }
