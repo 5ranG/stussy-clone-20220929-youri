@@ -11,15 +11,19 @@ fileAddButton.onclick = () => {
 
 fileInput.onchange = () => {
     const formData = new FormData(document.querySelector("form"));
+    let changeFlge = false;
 
     formData.forEach((value) => {
         if(value.size != 0){      
             productImageFiles.push(value);
             console.log(productImageFiles);
-            getImgePreview() 
-            fileInput.value = null;
+            changeFlge = true;
         }
-    })
+    });
+    if(changeFlge){
+        getImgePreview();
+        fileInput.value = null;
+    }
 }
 
 function getImgePreview() {
@@ -48,5 +52,58 @@ function getImgePreview() {
         }
 
         setTimeout(reader.readAsDataURL(file), i*100)
+    });
+}
+
+submitButton.onclick = () => {
+    const productInputs = document.querySelectorAll(".product-input");
+
+    let formData = new FormData();
+
+    formData.append("category", productInputs[0].value);
+    formData.append("name", productInputs[1].value);
+    formData.append("price", productInputs[2].value);
+    formData.append("color", productInputs[3].value);
+    formData.append("size", productInputs[4].value);
+    formData.append("infoSimple", productInputs[5].value);
+    formData.append("infoDetail", productInputs[6].value);
+    formData.append("infoOption", productInputs[7].value);
+    formData.append("infoManagement", productInputs[8].value);
+    formData.append("infoShipping", productInputs[9].value);
+
+    // formData는 append로 넣으면 배열로 묶이는 습성이 있다.
+    // 리스트랑은 다른 개념.
+
+    productImageFiles.forEach((file) => {
+        formData.append("files", file);
+    })
+
+    formData.forEach((value, key) => {
+        console.log(key);
+        console.log(value);
+        console.log();
+    })
+
+    request(formData);
+
+}
+
+function request(formData) {
+    $.ajax({
+        async: false,
+        type: "post",
+        url: "/api/admin/product",
+        enctype: "multipart/form-data",
+        contentType: false,
+        processData: false,
+        data: formData,
+        dataType: "json",
+        success: (response) => {
+            alert("상품 등록 완료");
+        },
+        error: (error) => {
+            alert("상품 등록 실패");
+            console.log(error);
+        }
     });
 }

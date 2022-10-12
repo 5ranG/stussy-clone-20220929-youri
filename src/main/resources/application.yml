@@ -22,4 +22,5 @@ mybatis:
   mapper-locations:
     - /mappers/*.xml
 
-
+file:
+  path: C:\Korea IT\web\springboot\stussy-clone-20220929-youri/upload/

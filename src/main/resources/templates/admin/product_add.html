@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="/static/css/header.css">
     <link rel="stylesheet" href="/static/css/aside.css">
     <link rel="stylesheet" href="/static/css/admin.css">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
 </head>
 <body>
     <div id="container">
@@ -72,17 +73,17 @@
                         </ul>
                     </aside>
                     <section class="admin-main">
-                        <select vale="1">
+                        <select class="product-input">
                             <option value="none" selected>상품 종류</option>
-                                <option value="TEES">TEES</option>
-                                <option value="SWEATS">SWEATS</option>
-                                <option value="OVERDYED">OVERDYED</option>
-                                <option value="TOPS_SHITRS">TOPS & SHITRS</option>
-                                <option value="KNITS">KNITS</option>
-                                <option value="BOTTOMS">BOTTOMS</option>
-                                <option value="DENIM">DENIM</option>
-                                <option value="HEADWEAR">HEADWEAR</option>
-                                <option value="ACCESSORIES">ACCESSORIES</option>
+                            <option value="TEES">TEES</option>
+                            <option value="SWEATS">SWEATS</option>
+                            <option value="OVERDYED">OVERDYED</option>
+                            <option value="TOPS_SHITRS">TOPS & SHITRS</option>
+                            <option value="KNITS">KNITS</option>
+                            <option value="BOTTOMS">BOTTOMS</option>
+                            <option value="DENIM">DENIM</option>
+                            <option value="HEADWEAR">HEADWEAR</option>
+                            <option value="ACCESSORIES">ACCESSORIES</option>
                         </select>
                         <input type="text" class="product-input" placeholder="상품명을 입력하세요">
                         <input type="text" class="product-input" placeholder="가격을 입력하세요">
@@ -116,7 +117,7 @@
                             <div class="product-img-inputs">
                                 <label>상품 이미지</label>
                                 <button type="button" class="add-button">추가</button>
-                                <input type="file" class="file-input product-invisible" name="file">
+                                <input type="file" class="file-input product-invisible" name="file" multiple>
                             </div>
                         </form>
                         <div class="product-images">
