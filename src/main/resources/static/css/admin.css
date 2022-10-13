@@ -92,3 +92,148 @@ textarea{
     color: white;
     background-color: #555;
 }
+
+/* <<<<<<<<<<<<<<<<<<<<<<<< LIST >>>>>>>>>>>>>>>>>>>>>>>> */
+
+.list-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.category-select{
+    width: 200px;
+}
+
+.product-search{
+    display: flex;
+    display: flex-end;
+    align-items: center;
+    width: 400px;
+}
+
+.product-search input, button{
+    margin: 0px 0px 15px 10px;
+    padding: 10px;
+}
+
+.page-buttons{
+    display: flex;
+    justify-content: space-around;
+    margin: 15px 0px;
+    width: 140px;
+}
+
+.page-buttons li{
+    border: 1px solid rgb(198, 198, 198);
+    border-radius: 2px;
+    width: 17px;
+    text-align: center;
+    cursor: pointer;
+}
+
+table{
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid rgb(198, 198, 198);  
+}
+
+.product-list{
+    margin-bottom: 20px;
+}
+
+.product-info{
+    border: none;
+}
+
+th, td {
+    border: 1px solid rgb(198, 198, 198);
+    padding: 5px;
+    text-align: center;
+}
+
+th:nth-child(1){
+    width: 70px;
+}
+
+th:nth-child(2){
+    width: 120px;
+}
+
+th:nth-child(3){
+    width: 100px;
+}
+
+th:nth-child(4){
+    width: 100px;
+}
+
+th:nth-child(5){
+    width: 70px;
+}
+
+th:nth-child(6){
+    width: 70px;
+}
+
+th:nth-child(7){
+    width: 70px;
+}
+
+th:nth-child(8){
+    width: 70px;
+}
+
+td:nth-child(2){
+    text-align: left;
+}
+
+td:nth-child(3){
+    text-align: left;
+}
+
+td:nth-child(4){
+    text-align: right;
+}
+
+.product-list th, .product-list td{
+    height: 25px;
+}
+
+.product-info td{
+    border: none;
+}
+
+.detail-invisible {
+    display: none;
+}
+
+.list-button{
+    margin: 0px;
+    border: none;
+    border-radius: 5px;
+    padding: 0px;
+    width: 40px; height: 30px;
+}
+
+.detail-button{
+    color: rgb(0, 166, 255);
+}
+
+.delete-button{
+    color: rgb(255, 64, 0);
+}
+
+.list-button .fa-regular{
+    font-size: 14px;
+}
+
+.product-info textarea{
+    height: 60px;
+}
+
+.update-button{
+    margin: 0px;
+    padding: 15px;
+    width: 100%;
+}
