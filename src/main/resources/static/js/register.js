@@ -1,12 +1,12 @@
 const registerButton = document.querySelector(".login-button");
 const registerInputs = document.querySelectorAll(".login-input");
 
-for(let i = 0; i< registerInputs.length; i++){
+for(let i = 0; i < registerInputs.length; i++) {
     registerInputs[i].onkeyup = () => {
-        if(window.event.keyCode == 13){ // 13 은 엔터
-            if(i != 3){
-                registerButton[i + 1].focus();
-            }else{
+        if(window.event.keyCode == 13){
+            if(i != 3) {
+                registerInputs[i + 1].focus();
+            }else {
                 registerButton.click();
             }
         }

@@ -119,9 +119,12 @@ textarea{
 
 .page-buttons{
     display: flex;
-    justify-content: space-around;
+    justify-content: flex-start;
     margin: 15px 0px;
     width: 140px;
+}
+.page-buttons a{
+    margin: 0px 2px;
 }
 
 .page-buttons li{
