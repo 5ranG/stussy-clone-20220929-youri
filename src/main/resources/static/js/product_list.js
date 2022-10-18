@@ -4,17 +4,15 @@ const searchButton = document.querySelector(".search-button");
 
 let productRepository = {
     상품관련리스트: new Array(),
-    
     clear상품관련리스트: () => {
         this.상품관련리스트.forEach(list => {
-            while(list.length != 0){
+            while(list.length != 0) {
                 list.pop();
             }
-        });
+        }); 
     },
-    
     push상품관련리스트: (list) => {
-        this.상품관련리스트.push(list)
+        this.상품관련리스트.push(list);
     }
 }
 
@@ -37,29 +35,27 @@ let 페이지이동버튼서비스 = {
             start: 0,
             end: 0
         }
-        
+
         페이지번호인덱스.start = nowPage % 5 == 0 ? nowPage - 4 : nowPage - (nowPage % 5) + 1;
         페이지번호인덱스.end = 페이지번호인덱스.start + 4 <= this.마지막페이지번호 ? 페이지번호인덱스.start + 4 : this.마지막페이지번호;
-
+        
         return 페이지번호인덱스;
     }
+    
 }
 
 let 상품리스트상단기능서비스 = {
     페이지이동버튼생성: (nowPage, productTotalCount) => {
-
         const pageButtons = document.querySelector(".page-buttons");
 
         pageButtons.innerHTML = "";
-    
-        let maxPage = 페이지이동버튼서비스.마지막페이지번호();
 
+        let maxPage = 페이지이동버튼서비스.마지막페이지번호();
         let startIndex = 페이지이동버튼서비스.페이지번호생성().start;
         let endIndex = 페이지이동버튼서비스.페이지번호생성().end;
 
+        //////////////////////////////////////////여기서 시작
 
-        ///////////////////// 여기서시작
-    
         if(page != 1){
             pageButtons.innerHTML = `<a href="javascript:void(0)"><li>&#60;</li></a>`;
         }
@@ -74,13 +70,13 @@ let 상품리스트상단기능서비스 = {
         if(page != maxPage){
             pageButtons.innerHTML += `<a href="javascript:void(0)"><li>&#62;</li></a>`;
         }
-    
+
         const pageNumbers = pageButtons.querySelectorAll("li");
-    
+
         for(let i = 0; i < pageNumbers.length; i++) {
             pageNumbers[i].onclick = () => {
                 let pageNumberText = pageNumbers[i].textContent;
-    
+
                 if(pageNumberText == "<") {
                     --page;
                 }else if(pageNumberText == ">") {
@@ -88,19 +84,18 @@ let 상품리스트상단기능서비스 = {
                 }else {
                     page = pageNumberText;
                 }
-    
+
                 getList();
             }
         }
-
     }
 }
 
 let 상품리스트서비스 = {
     상품리스트불러오기: () => {
         const responseData = this.상품리스트데이터요청();
-        if(this.상품리스트데이터요청성공확인(responseData)){
-            if(responseData.length > 0){
+        if(this.상품리스트데이터요청성공확인(responseData)) {
+            if(responseData.length > 0) {
 
             }
         }
@@ -108,7 +103,7 @@ let 상품리스트서비스 = {
     상품리스트데이터요청성공확인: (responseData) => responseData != null,
     상품리스트데이터요청: () => {
         let responseData = null;
-    
+
         $.ajax({
             async: false,
             type: "get",
@@ -116,9 +111,9 @@ let 상품리스트서비스 = {
             data: 상품리스트requestParams,
             dataType: "json",
             success: (response) => {
-                responseData = response.data;            
+                responseData = response.data;
                 console.log(response);
-    
+
                 if(response.data.length != 0) {
                     loadPageNumberButtons(response.data[0].productTotalCount);
                     productDataList = response.data;
@@ -133,15 +128,15 @@ let 상품리스트서비스 = {
                 console.log(error);
             }
         });
-    
-        return responseData;
 
-    }
+        return responseData;
+    },
+
 
 }
 
-
 function 상품리스트데이터요청() {
+    
 }
 
 categorySelectInput.onchange = () => {
@@ -164,6 +159,7 @@ searchButton.onclick = () => {
 }
 
 function loadPageNumberButtons(productTotalCount) {
+    
 
 }   
 
@@ -395,6 +391,7 @@ function getImageFiles(productImageFiles) {
     });
     
 }
+
 
 
 window.onload = () => {

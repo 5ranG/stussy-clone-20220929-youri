@@ -29,13 +29,12 @@ public class AccountApi {
     @ValidAspect
 //    @TimeAspect
     @PostMapping("/register")
-    public ResponseEntity<?> register(@Validated(ValidationSequence.class)
-                                          // ㄴRegisterDto 에서 message 순서 지정 유효성검사
-                                          @RequestBody RegisterReqDto registerReqDto,
-                                          //json으로 받아야하니 @RequestBody
+    public ResponseEntity<?> register(@Validated(ValidationSequence.class) @RequestBody RegisterReqDto registerReqDto,
+           // @Validated(ValidationSequence.class): RegisterDto 에서 message 순서 지정 유효성검사
+           // @RequestBody: json으로 받아야하니까.
                                       BindingResult bindingResult) throws Exception {
-        //https://sweets1327.tistory.com/m/54
-            accountService.checkDuplicateEmail(registerReqDto.getEmail());
+           // BindingResult: 유효성 검증. @Validated와 세트
+        accountService.checkDuplicateEmail(registerReqDto.getEmail());
             accountService.register(registerReqDto);
 
             return ResponseEntity.ok().body(new CMRespDto<>(1, "Successfully registered", registerReqDto));
