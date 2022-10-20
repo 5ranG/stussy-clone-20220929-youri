@@ -24,7 +24,7 @@ public class TimerAop {
     @Around("executionPointCut()")
     public Object around(ProceedingJoinPoint joinPoint) throws Throwable{
         //joinPoint 는 실행되는 메소드의 정보
-        StopWatch stopWatch = new StopWatch();
+        StopWatch stopWatch = new StopWatch(); // StopWatch는 시간 재는 클래스
         stopWatch.start(); //메소드가 시작되기 전 
         //↑전처리
         Object result = joinPoint.proceed(); // 실행 시점. *(..))를 호출하는 시점?

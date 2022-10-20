@@ -4,6 +4,7 @@ import com.stussy.stussyclone20220929youri.aop.annotation.LogAspect;
 import com.stussy.stussyclone20220929youri.aop.annotation.ValidAspect;
 import com.stussy.stussyclone20220929youri.dto.CMRespDto;
 import com.stussy.stussyclone20220929youri.dto.admin.ProductAdditionReqDto;
+import com.stussy.stussyclone20220929youri.dto.admin.ProductModificationReqDto;
 import com.stussy.stussyclone20220929youri.dto.validation.ValidationSequence;
 import com.stussy.stussyclone20220929youri.service.admin.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -50,4 +51,11 @@ public class ProductApi {
         return ResponseEntity.ok(new CMRespDto<>(1, "Successfully", productService.getProductList(page, category, searchValue)));
     }
 
+    @LogAspect
+//    @ValidAspect
+    @PostMapping("/product/modification")
+    public ResponseEntity<?> updateProduct(ProductModificationReqDto productModificationReqDto) throws Exception {
+
+        return ResponseEntity.ok(new CMRespDto<>(1, "Successfully", true));
+    }
 }
