@@ -38,10 +38,6 @@ public class ValidationAop {
             }
         }
 
-//        if(bindingResult == null){
-//            return joinPoint.proceed(); // Around에만 사용되므로 Before때는 삭제.
-//        }
-
         if (bindingResult.hasErrors()) { //bindingResult가 에러를 가지고 있으면 아래를 실행
             Map<String, String> errorMap = new HashMap<String, String>();
 
@@ -59,8 +55,6 @@ public class ValidationAop {
     public void afterReturning(JoinPoint joinPoint, Object returnObj){
         log.info("Validation success: {}", returnObj);
     }
-
-
 }
 
 

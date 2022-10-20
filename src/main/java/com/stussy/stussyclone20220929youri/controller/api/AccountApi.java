@@ -34,7 +34,7 @@ public class AccountApi {
            // @RequestBody: json으로 받아야하니까.
                                       BindingResult bindingResult) throws Exception {
            // BindingResult: 유효성 검증. @Validated와 세트
-        accountService.checkDuplicateEmail(registerReqDto.getEmail());
+            accountService.checkDuplicateEmail(registerReqDto.getEmail());
             accountService.register(registerReqDto);
 
             return ResponseEntity.ok().body(new CMRespDto<>(1, "Successfully registered", registerReqDto));
