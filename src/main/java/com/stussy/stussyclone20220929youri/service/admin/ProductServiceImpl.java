@@ -4,6 +4,7 @@ import com.stussy.stussyclone20220929youri.domain.Product;
 import com.stussy.stussyclone20220929youri.domain.ProductImgFile;
 import com.stussy.stussyclone20220929youri.dto.admin.ProductAdditionReqDto;
 import com.stussy.stussyclone20220929youri.dto.admin.ProductListRespDto;
+import com.stussy.stussyclone20220929youri.dto.admin.ProductModificationReqDto;
 import com.stussy.stussyclone20220929youri.exception.CustomInternalServerErrorException;
 import com.stussy.stussyclone20220929youri.exception.CustomValidationException;
 import com.stussy.stussyclone20220929youri.repository.admin.ProductRepository;
@@ -17,6 +18,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.ProtectionDomain;
 import java.util.*;
 
 @Service
@@ -99,5 +101,86 @@ public class ProductServiceImpl implements ProductService{
         });
 
         return list;
+    }
+
+    @Override
+    public boolean updateProduct(ProductModificationReqDto productModificationReqDto) throws Exception {
+
+        boolean status = false;
+
+        int result = productRepository.setProduct(productModificationReqDto.toProductEntity());
+
+        if(result != 0) {
+            status = true;
+            boolean insertStatus = true;
+            boolean deleteStatus = true;
+
+            if(productModificationReqDto.getFiles() != null) {
+                insertStatus = insertProductImg(productModificationReqDto.getFiles(), productModificationReqDto.getId());
+                // 이게 작업이 안되면 insertStatus는 false 가 된다.
+            }
+
+            if(productModificationReqDto.getDeleteImgFiles() != null) {
+                deleteStatus = deleteProductImg(productModificationReqDto.getDeleteImgFiles(), productModificationReqDto.getId());
+            }
+
+            status = status && insertStatus && deleteStatus;
+            // 셋 중 하나라도 false가 있으면 안됨
+
+            if(status == false){
+                throw new CustomInternalServerErrorException("상품 수정 오류");
+            }
+        }
+
+        return false;
+    }
+
+    private boolean insertProductImg(List<MultipartFile> files, int productId) throws Exception {
+        boolean status = false;
+
+        List<ProductImgFile> productImgFiles = getProductImgFiles(files, productId);
+
+        return productRepository.saveImgFiles(productImgFiles) > 0;
+    }
+
+    private boolean deleteProductImg(List<String> deleteImgFiles, int productId) throws Exception {
+        boolean status = false;
+
+        Map<String, Object> map = new HashMap<String, Object>();
+
+        map.put("productId", productId);
+        map.put("deleteImgFiles",deleteImgFiles);
+
+        int result = productRepository.deleteImgFiles(map);
+        if(result != 0){
+            deleteImgFiles.forEach(temp_name -> {
+                Path uploadPath = Paths.get(filePath + "/product/" + temp_name);
+                File file = new File(uploadPath.toUri());
+                if(file.exists()) {
+                    file.delete();
+                }
+            });
+            status = true;
+        }
+
+        return status;
+    }
+
+    @Override
+    public boolean deleteProduct(int productId) throws Exception {
+        List<ProductImgFile> productImgFiles = productRepository.getProductImgList(productId);
+
+        if(productRepository.deleteProduct(productId) > 0) {
+            productImgFiles.forEach(productImgFile -> {
+                Path uploadPath = Paths.get(filePath + "/product/" + productImgFile.getTemp_name());
+
+                File file = new File(uploadPath.toUri());
+                if(file.exists()) {
+                    file.delete();
+                }
+            });
+            return true;
+        }
+        return false;
     }
 }
