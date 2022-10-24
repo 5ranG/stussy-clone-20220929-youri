@@ -47,7 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll() // 모두 접근 권한 허용해라
 
                 /*<<<<<<<<< API >>>>>>>>>*/
-                .antMatchers("/api/account/register")
+                .antMatchers("/api/account/register", "/api/collections/**")
                 .permitAll()
 
                 .anyRequest() // antMatchers외의 다른 모든 요청들은
