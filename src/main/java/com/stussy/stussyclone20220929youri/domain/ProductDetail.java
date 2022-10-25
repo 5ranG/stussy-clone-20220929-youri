@@ -16,5 +16,5 @@ public class ProductDetail {
     private int price;
     private String color;
     private String size;
-    private List<ProductImgFile> productimgName;
+    private List<ProductImgFile> productImgFiles;
 }

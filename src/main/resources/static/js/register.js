@@ -30,7 +30,7 @@ registerButton.onclick = () => {
         data: JSON.stringify(registerInfo), // obj -> json
         dataType: "json",
         success: (response) => {
-            // console.log(response);
+            console.log(response);
             location.replace("/account/login"); //이전기록 날려야함.
         },
         error: (error) => {
