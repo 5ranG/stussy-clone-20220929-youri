@@ -10,13 +10,13 @@
             pm.group_id,
             pm.NAME,
             pm.price,
-            pig.temp_name
+            pig.temp_name,
             pc.total_count
         FROM
             product_mst pm
             LEFT OUTER JOIN product_img pig ON(pig.product_id = pm.id)
             LEFT OUTER JOIN (select
-                                COUNT(*) as total_count
+                                COUNT(*) AS total_count
                             from
                                 (select
                                     *
@@ -24,21 +24,39 @@
                                     product_mst
                                 where
                                     1 = 1
-                                    <if test = 'category != "all"'>
+                                    <if test='category != "all"'>
                                         and pm.category = #{category}
                                     </if>
-                                    AND category = 'sweats'
                                 GROUP by
                                     group_id) cnt) pc ON(1 = 1)
-        WHERE
+        where
             1 = 1
-            <if test = 'category != "all"'>
+            <if test='category != "all"'>
                 and pm.category = #{category}
             </if>
         GROUP BY
             pm.group_id
         LIMIT #{index}, 16
     </select>
-
+    <select id="getProduct" parameterType="Integer" resultType="">
+        SELECT
+            pm.group_id,
+            pm.name,
+            pm.price,
+            pm.color,
+            pm.size,
+            pim.temp_name
+        FROM
+            product_mst pm
+        LEFT OUTER JOIN product_img pim ON(pim.product_id = (SELECT
+                                                                    id
+                                                                from
+                                                                    product_mst
+                                                                where
+                                                                    group_id = #{group_id}
+                                                                LIMIT 1))
+        where
+            group_id = #{group_id};
+    </select>
     
 </mapper>
