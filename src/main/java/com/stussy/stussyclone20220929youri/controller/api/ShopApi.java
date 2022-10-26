@@ -21,7 +21,7 @@ public class ShopApi {
     }
 
     @GetMapping("/products/{groupId}")
-    public ResponseEntity<?> getProduct(@PathVariable int groupId){
-        return ResponseEntity.ok(new CMRespDto<>(1, "Load Successfully", null));
+    public ResponseEntity<?> getProduct(@PathVariable int groupId) throws Exception {
+        return ResponseEntity.ok(new CMRespDto<>(1, "Successfully", shopService.getProductDetails(groupId)));
     }
 }
