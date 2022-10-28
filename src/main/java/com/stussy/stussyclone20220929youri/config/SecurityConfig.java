@@ -33,7 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/admin/**", "/api/admin/**")
 //                .hasRole(("ADMIN")) // ADMIN 권한이 필요하다. 하나의 권한
                 .access("hasRole('ADMIN') or hasRole('MANAGER')")
-                .antMatchers("/account") // [메인객체] 해당 요청 주소들은
+                .antMatchers("/account", "/order/**") // [메인객체] 해당 요청 주소들은
                 .access("hasRole('USER') or hasRole('ADMIN') or hasRole('MANAGER')")
                 //.authenticated() // 인증이 필요하다.
 
