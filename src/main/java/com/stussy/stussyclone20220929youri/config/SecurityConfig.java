@@ -1,6 +1,8 @@
 package com.stussy.stussyclone20220929youri.config;
 
 import com.stussy.stussyclone20220929youri.handler.auth.AuthFailureHandler;
+import com.stussy.stussyclone20220929youri.service.auth.PrincipalOauth2Service;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -11,7 +13,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @EnableWebSecurity // 기존의 WebSecurityConfigurerAdapter 클래스를 해당 SecurityConfig로 대체하겠다.
 // 시큐리티에 등록하는거. extends랑 별개
 @Configuration //스프링의 설정 클래스. 이래야 IoC에 등록
+@RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    private final PrincipalOauth2Service principalOauth2Service;
 
     @Bean // @Configuration와 세트로 사용. IoC빈등록방법
     public BCryptPasswordEncoder passwordEncoder(){
@@ -47,7 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll() // 모두 접근 권한 허용해라
 
                 /*<<<<<<<<< API >>>>>>>>>*/
-                .antMatchers("/api/account/register", "/api/collections/**")
+                .antMatchers("/api/account/register", "/api/collections/**", "/api/auth/**")
                 .permitAll()
 
                 .anyRequest() // antMatchers외의 다른 모든 요청들은
@@ -65,6 +70,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     // html form 에서 /account/login 로 요청을 날림!
 //                    .failureHandler()
                     .failureHandler(new AuthFailureHandler())
+                .and()
+                    .oauth2Login()
+                    .userInfoEndpoint()
+                    .userService(principalOauth2Service)
+                .and()
                     .defaultSuccessUrl("/index"); // "이전 페이지가 없는 경우"에만 로그인 성공시 index로 보낸다.
                     //보통 자동으로 이전 페이지를 기억했다가 로그인 페이지 전 페이지로 돌아간다.
     }

@@ -17,6 +17,15 @@ spring:
     user:
       name: youri
       password: 1q2w3e4r!
+    oauth2:
+      client:
+        registration:
+          google:
+            clientId: 788533265155-72k6eis0r76cko89fum3mlg6fboumfqp.apps.googleusercontent.com
+            clientSecret: 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
+            scope:
+              - email
+              - profile
 
 mybatis:
   mapper-locations:
